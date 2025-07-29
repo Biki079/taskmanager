@@ -1,49 +1,66 @@
-# Django
-*.pyc
-*.pyo
-*.pyd
+# Python bytecode
 __pycache__/
-db.sqlite3
+*.py[cod]
+*$py.class
+
+# Django migrations
+*/migrations/
+!*/migrations/__init__.py
+
+# SQLite database
 *.sqlite3
 
-# Environment
-.env
-.env.*
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
 
-# VSCode
+# VS Code settings
 .vscode/
 
-# MacOS
-.DS_Store
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# Migrations
-*/migrations/__pycache__/
-*/migrations/*.pyc
-
-# Media and static files
-/media/
-/staticfiles/
+# Environment variables
+.env
+*.env
 
 # Logs
 *.log
 
-# Coverage reports
-htmlcov/
+# OS files
+.DS_Store
+Thumbs.db
+
+# Static/media if generated during build (optional)
+staticfiles/
+media/
+# Ignore compiled Python files
+*.pyc                           
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+# Ignore coverage reports
 .coverage
-.tox/
-.nox/
-.cache/
-.pytest_cache/
+# Ignore local settings
+local_settings.py
+# Ignore IDE specific files
+.idea/
+# Ignore Python egg files
+*.egg
+# Ignore Python bytecode files
+*.pyc
+# Ignore cache directories
+__pycache__/
+# Ignore test output
+test_output/
+# Ignore Django secret key file
+secret_key.txt
 
-# Node modules (if using frontend tools)
-node_modules/
-
-# Build
-build/
-dist/
-*.egg-info/
+# Ignore database files
+*.db
+# Ignore compiled Python files
+*.pyo
+# Ignore Python cache files
+*.pyd
+# Ignore backup files
+*.bak
+# Ignore temporary files
+*.tmp

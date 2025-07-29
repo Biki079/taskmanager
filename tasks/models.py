@@ -8,8 +8,6 @@ class Task(models.Model):
     complete = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
-
-# Create your models here.
     def __str__(self):
         return self.title
 
@@ -17,4 +15,3 @@ class Task(models.Model):
         ordering = ['complete', '-created']
         verbose_name = 'Task'
         verbose_name_plural = 'Tasks'
-        # This will ensure that the tasks are ordered by completion status and creation date
