@@ -9,19 +9,67 @@
           <h2 class="mb-0">Task List</h2>
         </div>
         <div class="card-body">
+
+          <!-- Quick Add Task Form -->
+          <form method="post" action="{% url 'task-list' %}" class="row g-2 align-items-center mb-3 bg-light p-3 rounded shadow-sm">
+            {% csrf_token %}
+            <div class="col-12 col-md-4">
+              <input type="text" name="quick_title" class="form-control" placeholder="Task title" required>
+            </div>
+            <div class="col-12 col-md-6">
+              <input type="text" name="quick_description" class="form-control" placeholder="Description (optional)">
+            </div>
+            <div class="col-12 col-md-2 d-grid">
+              <button type="submit" name="quick_add" value="1" class="btn btn-primary">Add Task</button>
+            </div>
+          </form>
+
           <a href="{% url 'task-create' %}" class="btn btn-success mb-3">Create New Task</a>
+
+          {# Progress Bar #}
+          {% if total > 0 %}
+            <div class="mb-3">
+              <label class="form-label">Progress</label>
+              <div class="progress" style="height: 24px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: {{ percent }}%;" aria-valuenow="{{ completed }}" aria-valuemin="0" aria-valuemax="{{ total }}">
+                  {{ completed }}/{{ total }} Completed
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
           <ul class="list-group">
             {% for task in tasks %}
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                <div>
-                  <strong>{{ task.title }}</strong> - {{ task.description }}
-                  {% if task.complete %}<span class="badge bg-success ms-2">Completed</span>{% endif %}
-                </div>
+              <li class="list-group-item d-flex justify-content-between align-items-center task-detail-item">
+                <form method="post" action="{% url 'task-list' %}" class="d-flex align-items-center w-100">
+                  {% csrf_token %}
+                  <input type="hidden" name="task_id" value="{{ task.pk }}">
+                  <input type="checkbox" name="complete" value="1" onchange="this.form.submit()" {% if task.complete %}checked{% endif %} class="form-check-input me-2">
+                  <div class="flex-grow-1">
+                    <span class="fw-bold task-title">{{ task.title }}</span>
+                    <span class="task-desc text-muted">- {{ task.description }}</span>
+                    {% if task.complete %}<span class="badge bg-success ms-2">Completed</span>{% endif %}
+                  </div>
+                  <a href="{% url 'delete-task' task.pk %}" class="btn btn-sm btn-danger ms-2">Delete</a>
+                </form>
               </li>
             {% empty %}
               <li class="list-group-item">No tasks found.</li>
             {% endfor %}
           </ul>
+          <style>
+            body.dark-mode .task-detail-item {
+              background: #23272b !important;
+              color: #e0e0e0 !important;
+            }
+            body.dark-mode .task-detail-item .task-title {
+              color: #fff !important;
+            }
+            /* .text-muted and .text-secondary are handled globally in base.html */
+            body.dark-mode .list-group-item .badge {
+              color: #fff !important;
+            }
+          </style>
         </div>
       </div>
     </div>

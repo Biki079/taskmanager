@@ -12,6 +12,7 @@
           <p><strong>Username:</strong> {{ user.username }}</p>
           <p><strong>Email:</strong> {{ user.email }}</p>
           <p><strong>Joined:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
+          <p><strong>Timezone:</strong> <span class="badge bg-dark text-light" style="font-size:1em;">{{ profile.timezone }}</span></p>
         </div>
       </div>
       <div class="card mt-4">
@@ -22,6 +23,24 @@
           <li class="list-group-item">Total Tasks: {{ total_tasks }}</li>
           <li class="list-group-item">Completed Tasks: {{ completed_tasks }}</li>
           <li class="list-group-item">Incomplete Tasks: {{ incomplete_tasks }}</li>
+        </ul>
+      </div>
+      <div class="card mt-4">
+        <div class="card-header bg-info text-white">
+          <h4 class="mb-0">Your Tasks</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+          {% for task in tasks %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <strong>{{ task.title }}</strong> - {{ task.description|truncatechars:40 }}
+                {% if task.complete %}<span class="badge bg-success ms-2">Completed</span>{% endif %}
+              </div>
+              <a href="{% url 'delete-task' task.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </li>
+          {% empty %}
+            <li class="list-group-item">No tasks found.</li>
+          {% endfor %}
         </ul>
       </div>
       <div class="mt-4">
